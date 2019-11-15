@@ -1,0 +1,44 @@
+:root {
+	--primary-color: #00897b;
+	--secondary-color: #89000e;
+	--primary-color-lighten: #80cbc4;
+	--primary-color-darken: #004d40;
+}
+
+* {
+	position: relative;
+	box-sizing: border-box;
+}
+
+body {
+	background-color: whitesmoke;
+}
+
+nav {
+	margin: 0 !important;
+}
+main {
+	min-height: calc(100vh - 64px);
+}
+
+.large-font {
+	font-size: large;
+}
+
+.background {
+	background-position: center;
+	background-size: cover;
+	background-color: var(--primary-color);
+}
+
+.team {
+	margin: 20px 0px;
+}
+.team img {
+	display: block;
+	margin: 0px auto;
+	height: 200px;
+}
+.team p {
+	margin-bottom: 0 !important;
+}
