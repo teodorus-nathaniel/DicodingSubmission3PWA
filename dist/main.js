@@ -98,6 +98,18 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _js_
 
 /***/ }),
 
+/***/ "./src/js/components/team.js":
+/*!***********************************!*\
+  !*** ./src/js/components/team.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return getTeamComponent; });\nfunction getTeamComponent ({ crestUrl, name, website, email, founded, phone, address, id }, idx){\r\n\treturn `\r\n    <div class=\"col s12 m5 ${idx % 2 == 0 ? '' : 'offset-m1'}\">\r\n      <div class=\"card hoverable team\" data-id=\"${id}\">\r\n        <div class=\"card-image\">\r\n          <a class=\"btn-floating halfway-fab waves-effect waves-light btn-large white\"><i class=\"material-icons red-text\">favorite_border</i></a>\r\n          <img src=\"${crestUrl}\" alt=\"${name}\" class=\"cursor\">\r\n        </div>\r\n        <div class=\"card-content\">\r\n          <i class=\"material-icons activator cursor\">more_vert</i>\r\n          <p class=\"large-font center cursor\">${name}</p>\r\n        </div>\r\n        <div class=\"card-reveal\">\r\n          <span class=\"card-title grey-text text-darken-4\">${name}<i class=\"material-icons right\">close</i></span>\r\n          <p>Email      : ${email}</p>\r\n          <p>Phone      : ${phone}</p>\r\n          <p>Address    : ${address}</p>\r\n          <p>Founded on : ${founded}</p>\r\n        </div>\r\n        <div class=\"card-action\">\r\n          <a href=\"${website}\" target=\"_blank\">Visit ${name} official website</a>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  `;\r\n}\r\n\n\n//# sourceURL=webpack:///./src/js/components/team.js?");
+
+/***/ }),
+
 /***/ "./src/js/controller.js":
 /*!******************************!*\
   !*** ./src/js/controller.js ***!
@@ -106,7 +118,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _js_
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return init; });\n/* harmony import */ var _model__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./model */ \"./src/js/model.js\");\n/* harmony import */ var _view__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./view */ \"./src/js/view.js\");\n\r\n\r\n\r\nasync function changePage(pagename) {\r\n\tif (pagename == '') pagename = 'home';\r\n\tconst page = await _model__WEBPACK_IMPORTED_MODULE_0__[\"getPage\"](pagename);\r\n\t_view__WEBPACK_IMPORTED_MODULE_1__[\"renderPage\"](page);\r\n\r\n\tswitch (pagename) {\r\n\t\tcase 'home':\r\n\t\t\tinitHomePage();\r\n\t}\r\n}\r\n\r\nasync function initHomePage() {\r\n\tconst teams = await _model__WEBPACK_IMPORTED_MODULE_0__[\"getTeams\"]();\r\n\t_view__WEBPACK_IMPORTED_MODULE_1__[\"renderTeams\"](teams);\r\n\tconsole.log(teams);\r\n}\r\n\r\nfunction init() {\r\n\tchangePage(window.location.hash.substring(1));\r\n\twindow.addEventListener('hashchange', () => changePage(window.location.hash.substring(1)));\r\n}\r\n\n\n//# sourceURL=webpack:///./src/js/controller.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return init; });\n/* harmony import */ var _model__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./model */ \"./src/js/model.js\");\n/* harmony import */ var _view__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./view */ \"./src/js/view.js\");\n\r\n\r\n\r\nasync function changePage (pagename){\r\n\tif (pagename == '') pagename = 'home';\r\n\telse if (!isNaN(pagename)) pagename = 'team-detail';\r\n\telse return;\r\n\r\n\tconst page = await _model__WEBPACK_IMPORTED_MODULE_0__[\"getPage\"](pagename);\r\n\t_view__WEBPACK_IMPORTED_MODULE_1__[\"renderPage\"](page);\r\n\r\n\tswitch (pagename) {\r\n\t\tcase 'home':\r\n\t\t\tinitHomePage();\r\n\t\tdefault:\r\n\t\t\tinitTeamDetailPage(pagename);\r\n\t}\r\n}\r\n\r\nasync function initTeamDetailPage (){}\r\n\r\nasync function initHomePage (){\r\n\tconst teamsDom = document.getElementById(_view__WEBPACK_IMPORTED_MODULE_1__[\"domString\"].teams);\r\n\tteamsDom.addEventListener('click', (e) => {\r\n\t\tconst target = e.target;\r\n\t\tconst closestTeam = target.closest('.team');\r\n\t\tif (closestTeam && target.tagName !== 'I' && !target.closest('.card-reveal')) {\r\n\t\t\twindow.location.hash = closestTeam.dataset.id;\r\n\t\t}\r\n\t});\r\n\r\n\tconst teams = await _model__WEBPACK_IMPORTED_MODULE_0__[\"getTeams\"]();\r\n\t_view__WEBPACK_IMPORTED_MODULE_1__[\"renderTeams\"](teams);\r\n\tconsole.log(teams);\r\n}\r\n\r\nfunction init (){\r\n\tchangePage(window.location.hash.substring(1));\r\n\twindow.addEventListener('hashchange', () => changePage(window.location.hash.substring(1)));\r\n}\r\n\n\n//# sourceURL=webpack:///./src/js/controller.js?");
 
 /***/ }),
 
@@ -150,11 +162,11 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /*!************************!*\
   !*** ./src/js/view.js ***!
   \************************/
-/*! exports provided: renderPage, renderTeams */
+/*! exports provided: domString, renderPage, renderTeams */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"renderPage\", function() { return renderPage; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"renderTeams\", function() { return renderTeams; });\nconst domString = {\r\n\tmain: 'main',\r\n\tteams: 'teams',\r\n};\r\n\r\nfunction renderPage(page) {\r\n\tdocument.getElementById(domString.main).innerHTML = page;\r\n}\r\n\r\nfunction renderTeams(teams) {\r\n\tconst teamDom = document.getElementById(domString.teams);\r\n\tif (!teamDom) return;\r\n\tteamDom.innerHTML = '';\r\n\tteams.forEach(({ crestUrl, name }, idx) => {\r\n\t\tteamDom.innerHTML += `\r\n    <div class=\"row\">\r\n      <div class=\"col s12 m5 ${idx % 2 == 0 ? '' : 'offset-m1'}\">\r\n        <div class=\"card hoverable team\">\r\n          <div class=\"card-image\">\r\n            <img src=\"${crestUrl}\" alt=\"${name}\">\r\n          </div>\r\n          <div class=\"card-content\">\r\n            <p class=\"large-font center\">${name}</p>\r\n          </div>\r\n          <div class=\"card-action\">\r\n            <a href=\"#\">This is a link</a>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    `;\r\n\t});\r\n}\r\n\n\n//# sourceURL=webpack:///./src/js/view.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"domString\", function() { return domString; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"renderPage\", function() { return renderPage; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"renderTeams\", function() { return renderTeams; });\n/* harmony import */ var _components_team__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/team */ \"./src/js/components/team.js\");\n\r\n\r\nconst domString = {\r\n\tmain: 'main',\r\n\tteams: 'teams',\r\n};\r\n\r\nfunction renderPage (page){\r\n\tdocument.getElementById(domString.main).innerHTML = page;\r\n}\r\n\r\nfunction renderTeams (teams){\r\n\tconst teamDom = document.getElementById(domString.teams);\r\n\tif (!teamDom) return;\r\n\tteamDom.innerHTML = '';\r\n\tteams.forEach((team, idx) => {\r\n\t\tteamDom.innerHTML += Object(_components_team__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(team, idx);\r\n\t});\r\n}\r\n\n\n//# sourceURL=webpack:///./src/js/view.js?");
 
 /***/ })
 
