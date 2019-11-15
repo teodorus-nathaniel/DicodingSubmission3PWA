@@ -17,7 +17,7 @@ async function changePage (pagename){
 	}
 }
 
-async function initTeamDetailPage (){}
+async function initTeamDetailPage (id){}
 
 async function initHomePage (){
 	const teamsDom = document.getElementById(view.domString.teams);
