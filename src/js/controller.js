@@ -2,9 +2,12 @@ import * as model from './model';
 import * as view from './view';
 
 async function changePage (pagename){
+	let id;
 	if (pagename == '') pagename = 'home';
-	else if (!isNaN(pagename)) pagename = 'team-detail';
-	else return;
+	else if (!isNaN(pagename)) {
+		id = pagename;
+		pagename = 'team-detail';
+	} else return;
 
 	const page = await model.getPage(pagename);
 	view.renderPage(page);
@@ -13,11 +16,15 @@ async function changePage (pagename){
 		case 'home':
 			initHomePage();
 		default:
-			initTeamDetailPage(pagename);
+			initTeamDetailPage(id);
 	}
 }
 
-async function initTeamDetailPage (id){}
+async function initTeamDetailPage (id){
+	const team = await model.getTeam(id);
+	console.log(team);
+	view.renderTeam(team);
+}
 
 async function initHomePage (){
 	const teamsDom = document.getElementById(view.domString.teams);
@@ -31,7 +38,6 @@ async function initHomePage (){
 
 	const teams = await model.getTeams();
 	view.renderTeams(teams);
-	console.log(teams);
 }
 
 export default function init (){

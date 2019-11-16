@@ -24,6 +24,12 @@ main {
 .large-font {
 	font-size: large;
 }
+.bold {
+	font-weight: bold;
+}
+.italic {
+	font-style: italic;
+}
 
 .background {
 	background-position: center;
@@ -62,4 +68,9 @@ main {
 
 .margin50-0 {
 	margin: 50px 0px;
+}
+
+#team-crest {
+	max-height: 350px !important;
+	width: auto !important;
 }

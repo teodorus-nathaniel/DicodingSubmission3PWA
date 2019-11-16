@@ -1,6 +1,7 @@
 import { fetchJSON } from './utils/fetch';
 
 let teams = [];
+let team = {};
 const baseURL = 'https://api.football-data.org/v2/';
 const competitionID = 2014;
 
@@ -16,4 +17,8 @@ export async function getTeams (){
 	return teams;
 }
 
-export async function getTeam (teamId){}
+export async function getTeam (teamId){
+	if (team.id === teamId) return team;
+	team = await fetchJSON(`${baseURL}teams/${teamId}`);
+	return team;
+}

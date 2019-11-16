@@ -1,11 +1,29 @@
-<h3 class="center margin50-0">%Team Name%</h3>
-<div class="row">
-  <img src="https://upload.wikimedia.org/wikipedia/en/9/98/Club_Athletic_Bilbao_logo.svg" alt=""
-    class="col s12 center m4">
-  <div class="col s12 m7 offset-m1 large-font">
-    <p>Email : ${email}</p>
-    <p>Phone : ${phone}</p>
-    <p>Address : ${address}</p>
-    <p>Founded on : ${founded}</p>
+<h3 class="center margin50-0" id="team-name">%Team Name%</h3>
+<div class="row section">
+  <div class="col s12 m4 center-align">
+    <img id="team-crest" src="" alt="">
   </div>
+  <div class="col s12 m7 offset-m1 large-font row card-panel">
+    <h4 class="col s12">Profile</h4>
+    <div class="col s3 bold">
+      <p>Email </p>
+      <p>Phone </p>
+      <p>Address </p>
+      <p>Founded on </p>
+    </div>
+    <div class="col s9">
+      <p>: <span id="team-email">${email}</span></p>
+      <p>: <span id="team-phone">${phone}</span></p>
+      <p>: <span id="team-address">${address}</span></p>
+      <p>: <span id="team-founded">${founded}</span></p>
+    </div>
+  </div>
+</div>
+<div class="divider"></div>
+<div class="section">
+  <h4>Today's Match</h4>
+</div>
+<div class="divider"></div>
+<div class="section">
+  <h4>Squad List</h4>
 </div>
