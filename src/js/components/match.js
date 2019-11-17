@@ -25,7 +25,7 @@ export default function getMatchComponent ({ homeTeam, awayTeam, utcDate, compet
         <div class="card-action">
           <a class="cursor">Notify me about this match</a>
           <a class="italic right hide-on-small-only">${date.fromNow()}</a>
-          <a class="italic right-align block-display">${date.fromNow()}</a>
+          <a class="italic right-align block-display hide-on-med-and-up">${date.fromNow()}</a>
         </div>
       </div>
     </li>

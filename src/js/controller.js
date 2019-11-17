@@ -108,4 +108,6 @@ export default function init (){
 	view.initNav();
 	changePage(window.location.hash.substring(1));
 	window.addEventListener('hashchange', () => changePage(window.location.hash.substring(1)));
+
+	// insertFavTeam({ id: 1, tes: 'asdf' });
 }

@@ -64,6 +64,9 @@ main {
 .card-action a {
 	color: var(--secondary-color-lighten) !important;
 }
+.card-action a:hover {
+	text-decoration: underline;
+}
 
 .team {
 	margin: 20px 0px;
@@ -99,6 +102,9 @@ main {
 	cursor: pointer;
 	padding: 20px 20px;
 	box-shadow: 0px 0px 1px 1px lightgray;
+}
+#position-tab li:hover {
+	text-decoration: underline;
 }
 #position-tab li.active {
 	background-color: var(--primary-color);
@@ -143,6 +149,9 @@ main {
 	justify-content: center;
 	align-items: center;
 	color: #039be5;
+}
+#pagination li:hover {
+	text-decoration: underline;
 }
 #pagination li.active {
 	background-color: var(--primary-color);
