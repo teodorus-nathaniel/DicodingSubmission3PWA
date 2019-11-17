@@ -17,8 +17,13 @@ export async function getTeams (){
 	return teams;
 }
 
-export async function getTeam (teamId){
-	if (team.id === teamId) return team;
-	team = await fetchJSON(`${baseURL}teams/${teamId}`);
-	return team;
+export async function getTeamInfo (teamId){
+	if (team.id === teamId && Object.entries(team.info).length !== 0) return team.info;
+	team.info = await fetchJSON(`${baseURL}teams/${teamId}`);
+	return team.info;
+}
+
+export async function getTeamMatches (teamId){
+	const res = await fetchJSON(`${baseURL}teams/${teamId}/matches?status=SCHEDULED`);
+	return res.matches;
 }

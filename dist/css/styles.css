@@ -25,6 +25,16 @@ main {
 .large-font {
 	font-size: large;
 }
+.very-large-font {
+	font-size: xx-large;
+	font-weight: 100;
+}
+.larger-font {
+	font-size: 1.2em;
+}
+.light-bold {
+	font-weight: 400;
+}
 .bold {
 	font-weight: bold;
 }
@@ -41,6 +51,10 @@ main {
 	background-position: center;
 	background-size: cover;
 	background-color: var(--primary-color);
+}
+
+.card-action a {
+	color: var(--secondary-color-lighten) !important;
 }
 
 .team {
@@ -74,6 +88,7 @@ main {
 	width: auto !important;
 }
 #position-tab li {
+	cursor: pointer;
 	padding: 20px 20px;
 	box-shadow: 0px 0px 1px 1px lightgray;
 }
@@ -106,4 +121,41 @@ main {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+#pagination {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#pagination li {
+	width: 40px;
+	height: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #039be5;
+}
+#pagination li.active {
+	background-color: var(--primary-color);
+	border-radius: 50%;
+	color: white;
+}
+
+.match-item img {
+	max-height: 100px;
+	width: auto;
+}
+.match-item > div {
+	display: flex;
+	flex-direction: column;
+}
+.match-item > div:nth-child(3) {
+	align-items: flex-end;
+}
+.match-title {
+	padding: 10px;
+}
+.match-title p {
+	margin: 5px !important;
 }

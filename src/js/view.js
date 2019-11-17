@@ -1,5 +1,6 @@
 import getTeamComponent from './components/team';
 import getPlayerComponent from './components/player';
+import getMatchComponent from './components/match';
 
 export const domString = {
 	main: 'main',
@@ -15,6 +16,8 @@ export const domString = {
 	sideNav: 'mobile-nav',
 	positionTab: 'position-tab',
 	playerList: 'player-list',
+	pagination: 'pagination',
+	paginationList: 'pagination-list',
 };
 
 export function renderPage (page){
@@ -51,6 +54,14 @@ export function renderPlayers (squad, tab = null){
 	const playerListDom = document.getElementById(domString.playerList);
 	playerListDom.textContent = '';
 	displayed.forEach((player) => (playerListDom.innerHTML += getPlayerComponent(player)));
+}
+
+export function renderMatches (matches, teamId){
+	const matchesListDom = document.getElementById(domString.paginationList);
+	matchesListDom.textContent = '';
+	matches.forEach((match) => {
+		matchesListDom.innerHTML += getMatchComponent(match, teamId);
+	});
 }
 
 export function initNav (){

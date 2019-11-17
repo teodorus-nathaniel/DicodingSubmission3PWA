@@ -1,6 +1,6 @@
 import apiKey from '../key/api-key';
 
-export async function fetchJSON(url, body = {}, method = 'GET') {
+export async function fetchJSON (url, body = {}, method = 'GET'){
 	const headers = new Headers({
 		'X-Auth-Token': apiKey,
 	});
@@ -17,7 +17,7 @@ export async function fetchJSON(url, body = {}, method = 'GET') {
 			params += `&${key}=${value}`;
 		});
 		params.substring(1);
-		url += `?${params}`;
+		if (params !== '') url += `?${params}`;
 	}
 
 	const myRequest = new Request(url, options);
