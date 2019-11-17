@@ -24,6 +24,21 @@ async function initTeamDetailPage (id){
 	const team = await model.getTeam(id);
 	console.log(team);
 	view.renderTeam(team);
+	view.renderPlayers(team.squad);
+
+	const tabDom = document.getElementById(view.domString.positionTab);
+	let selectedTab = document.querySelector(`#${view.domString.positionTab} li.active`);
+	tabDom.addEventListener('click', (e) => {
+		const clicked = e.target.closest('#position-tab li');
+		if (!clicked) return;
+
+		selectedTab.classList.remove('active');
+		clicked.classList.add('active');
+		selectedTab = clicked;
+
+		const target = clicked.dataset.tab;
+		view.renderPlayers(team.squad, target);
+	});
 }
 
 async function initHomePage (){
@@ -41,6 +56,7 @@ async function initHomePage (){
 }
 
 export default function init (){
+	view.initNav();
 	changePage(window.location.hash.substring(1));
 	window.addEventListener('hashchange', () => changePage(window.location.hash.substring(1)));
 }

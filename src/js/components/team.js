@@ -8,7 +8,7 @@ export default function getTeamComponent ({ crestUrl, name, website, email, foun
         </div>
         <div class="card-content">
           <i class="material-icons activator cursor">more_vert</i>
-          <p class="large-font center cursor">${name}</p>
+          <p class="large-font center cursor bold">${name}</p>
         </div>
         <div class="card-reveal">
           <span class="card-title grey-text text-darken-4">${name}<i class="material-icons right">close</i></span>

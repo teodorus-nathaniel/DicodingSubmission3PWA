@@ -1,6 +1,7 @@
 :root {
 	--primary-color: #00897b;
 	--secondary-color: #89000e;
+	--secondary-color-lighten: #ff8995;
 	--primary-color-lighten: #80cbc4;
 	--primary-color-darken: #004d40;
 }
@@ -30,7 +31,12 @@ main {
 .italic {
 	font-style: italic;
 }
-
+.cursor {
+	cursor: pointer;
+}
+.margin50-0 {
+	margin: 50px 0px;
+}
 .background {
 	background-position: center;
 	background-size: cover;
@@ -62,15 +68,42 @@ main {
 	right: 25px;
 	z-index: 1;
 }
-.cursor {
-	cursor: pointer;
-}
-
-.margin50-0 {
-	margin: 50px 0px;
-}
 
 #team-crest {
-	max-height: 350px !important;
+	height: 350px !important;
 	width: auto !important;
+}
+#position-tab li {
+	padding: 20px 20px;
+	box-shadow: 0px 0px 1px 1px lightgray;
+}
+#position-tab li.active {
+	background-color: var(--primary-color);
+	color: white;
+	font-weight: bold;
+}
+
+.player-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 20px 0px;
+	padding: 10px 20px;
+	box-shadow: 0px 0px 3px 1px var(--secondary-color-lighten);
+}
+.player-item div {
+	display: flex;
+	align-items: center;
+}
+.player-item .player-number {
+	margin-right: 20px;
+	padding: 10px;
+	border-radius: 50%;
+	border: 1px solid var(--secondary-color);
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }

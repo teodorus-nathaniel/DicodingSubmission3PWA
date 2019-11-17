@@ -1,4 +1,5 @@
 import getTeamComponent from './components/team';
+import getPlayerComponent from './components/player';
 
 export const domString = {
 	main: 'main',
@@ -11,6 +12,9 @@ export const domString = {
 		email: 'team-email',
 		founded: 'team-founded',
 	},
+	sideNav: 'mobile-nav',
+	positionTab: 'position-tab',
+	playerList: 'player-list',
 };
 
 export function renderPage (page){
@@ -40,4 +44,15 @@ export function renderTeam (team){
 	phoneDom.textContent = team.phone;
 	foundedDom.textContent = team.founded;
 	emailDom.textContent = team.email;
+}
+
+export function renderPlayers (squad, tab = null){
+	const displayed = squad.filter((player) => player.position === tab);
+	const playerListDom = document.getElementById(domString.playerList);
+	playerListDom.textContent = '';
+	displayed.forEach((player) => (playerListDom.innerHTML += getPlayerComponent(player)));
+}
+
+export function initNav (){
+	M.Sidenav.init(document.getElementById(domString.sideNav));
 }
