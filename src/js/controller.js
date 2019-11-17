@@ -16,6 +16,7 @@ async function changePage (pagename){
 	switch (pagename) {
 		case 'home':
 			initHomePage();
+			break;
 		default:
 			initTeamDetailPage(id);
 	}

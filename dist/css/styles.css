@@ -52,6 +52,14 @@ main {
 	background-size: cover;
 	background-color: var(--primary-color);
 }
+.label-value {
+	display: flex;
+	flex-direction: column;
+	margin: 15px 0px;
+}
+.block-display {
+	display: block;
+}
 
 .card-action a {
 	color: var(--secondary-color-lighten) !important;
@@ -84,7 +92,7 @@ main {
 }
 
 #team-crest {
-	height: 350px !important;
+	height: 200px !important;
 	width: auto !important;
 }
 #position-tab li {
@@ -158,4 +166,16 @@ main {
 }
 .match-title p {
 	margin: 5px !important;
+}
+
+@media screen and (max-width: 1500px) {
+	.large-font {
+		font-size: medium;
+	}
+}
+@media screen and (min-width: 600px) {
+	.vertical-center {
+		display: flex;
+		align-items: center;
+	}
 }
