@@ -2,7 +2,7 @@ import * as model from './model';
 import * as view from './view';
 import getPaginationItemComponent from './components/pagination-item';
 
-async function changePage (pagename){
+async function changePage(pagename) {
 	let id;
 	if (pagename == '') pagename = 'home';
 	else if (!isNaN(pagename)) {
@@ -16,17 +16,18 @@ async function changePage (pagename){
 	switch (pagename) {
 		case 'home':
 			initHomePage();
+			break;
 		default:
 			initTeamDetailPage(id);
 	}
 }
 
-function initTeamDetailPage (id){
+function initTeamDetailPage(id) {
 	initTeamDetailInfo(id);
 	initTeamMatch(id);
 }
 
-async function initTeamMatch (id){
+async function initTeamMatch(id) {
 	const matches = await model.getTeamMatches(id);
 	console.log(matches);
 
@@ -34,7 +35,7 @@ async function initTeamMatch (id){
 	initPagination(matches, itemPerPage, id);
 }
 
-function initPagination (items, itemPerPage, id){
+function initPagination(items, itemPerPage, id) {
 	const pagesCount = Math.ceil(items.length / itemPerPage);
 	const paginationDom = document.getElementById(view.domString.pagination);
 	paginationDom.textContent = '';
@@ -62,14 +63,14 @@ function initPagination (items, itemPerPage, id){
 	});
 }
 
-function paginate (items, page, itemPerPage){
+function paginate(items, page, itemPerPage) {
 	const startIndex = (page - 1) * itemPerPage;
 	const itemsDisplayed = items.slice(startIndex, startIndex + itemPerPage);
 
 	return itemsDisplayed;
 }
 
-async function initTeamDetailInfo (id){
+async function initTeamDetailInfo(id) {
 	const team = await model.getTeamInfo(id);
 	view.renderTeam(team);
 	view.renderPlayers(team.squad);
@@ -89,7 +90,7 @@ async function initTeamDetailInfo (id){
 	});
 }
 
-async function initHomePage (){
+async function initHomePage() {
 	const teamsDom = document.getElementById(view.domString.teams);
 	teamsDom.addEventListener('click', (e) => {
 		const target = e.target;
@@ -103,7 +104,7 @@ async function initHomePage (){
 	view.renderTeams(teams);
 }
 
-export default function init (){
+export default function init() {
 	view.initNav();
 	changePage(window.location.hash.substring(1));
 	window.addEventListener('hashchange', () => changePage(window.location.hash.substring(1)));

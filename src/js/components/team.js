@@ -1,9 +1,9 @@
-export default function getTeamComponent ({ crestUrl, name, website, email, founded, phone, address, id }, idx){
+export default function getTeamComponent({ crestUrl, name, website, email, founded, phone, address, id }, idx) {
 	return `
     <div class="col s12 m5 ${idx % 2 == 0 ? '' : 'offset-m1'}">
       <div class="card hoverable team" data-id="${id}">
         <div class="card-image">
-          <a class="btn-floating halfway-fab waves-effect waves-light btn-large white"><i class="material-icons red-text">favorite_border</i></a>
+          <a class="btn-floating hoverable halfway-fab waves-effect waves-light white"><i class="material-icons red-text">favorite_border</i></a>
           <img src="${crestUrl}" alt="${name}" class="cursor">
         </div>
         <div class="card-content">

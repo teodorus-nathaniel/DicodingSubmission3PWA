@@ -56,6 +56,9 @@ main {
 .card-action a {
 	color: var(--secondary-color-lighten) !important;
 }
+.card-action a:hover {
+	text-decoration: underline;
+}
 
 .team {
 	margin: 20px 0px;
@@ -91,6 +94,9 @@ main {
 	cursor: pointer;
 	padding: 20px 20px;
 	box-shadow: 0px 0px 1px 1px lightgray;
+}
+#position-tab li:hover {
+	text-decoration: underline;
 }
 #position-tab li.active {
 	background-color: var(--primary-color);
@@ -136,6 +142,9 @@ main {
 	align-items: center;
 	color: #039be5;
 }
+#pagination li:hover {
+	text-decoration: underline;
+}
 #pagination li.active {
 	background-color: var(--primary-color);
 	border-radius: 50%;
@@ -158,4 +167,10 @@ main {
 }
 .match-title p {
 	margin: 5px !important;
+}
+
+@media screen and (max-width: 1500px) {
+	.large-font {
+		font-size: medium;
+	}
 }
