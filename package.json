@@ -6,14 +6,16 @@
 	"scripts": {
 		"build": "webpack",
 		"develop": "webpack --watch --mode=development",
-		"start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --mode=production --open"
+		"start": "node server.js"
 	},
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
 		"idb": "^4.0.5",
 		"moment": "^2.24.0",
-		"web-push": "^3.4.1",
+		"web-push": "^3.4.1"
+	},
+	"devDependencies": {
 		"webpack": "^4.41.2",
 		"webpack-cli": "^3.3.10",
 		"webpack-dev-server": "^3.9.0"
