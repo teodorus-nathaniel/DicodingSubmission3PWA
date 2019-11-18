@@ -24,12 +24,16 @@ window.addEventListener('load', async () => {
 	async function requestPermission() {
 		if (window.Notification) {
 			const result = await Notification.requestPermission();
-			// lakuin validasi ato ssuatu
-			showNotifikasiSederhana();
+			if (result === 'denied') console.log('notification denied.');
+			else if (result === 'default') console.log('allow notification to get notification of your matches.');
+			else {
+				console.log('enabled notification.');
+				registerPushNotification();
+			}
 		}
 	}
 
-	function showNotifikasiSederhana() {
+	function registerPushNotification() {
 		if ('PushManager' in window) {
 			const publicKey = 'BNO2RFLEiW03a0vW9jD9gKXvvLeAVCNnCXOJMHZNsZ20PCK78w5Ck9kiSwl1bdFF9NvR-X0pYp7F5OXSiF1cI-A';
 
@@ -55,26 +59,5 @@ window.addEventListener('load', async () => {
 					});
 			});
 		}
-
-		const vapidKeys = {
-			publicKey: 'BNO2RFLEiW03a0vW9jD9gKXvvLeAVCNnCXOJMHZNsZ20PCK78w5Ck9kiSwl1bdFF9NvR-X0pYp7F5OXSiF1cI-A',
-			privateKey: 'qoNfQaryxDl3cG6WgrK2XxCHkG3GwNNnf4PAeBuRTLY',
-		};
-
-		webPush.setVapidDetails('mailto:example@yourdomain.org', vapidKeys.publicKey, vapidKeys.privateKey);
-		var pushSubscription = {
-			endpoint: '<Endpoint URL>',
-			keys: {
-				p256dh: '<p256dh Key>',
-				auth: '<Auth key>',
-			},
-		};
-		var payload = 'Selamat! Aplikasi Anda sudah dapat menerima push notifikasi!';
-
-		var options = {
-			gcmAPIKey: '<FCM Sender ID>',
-			TTL: 60,
-		};
-		webPush.sendNotification(pushSubscription, payload, options);
 	}
 });

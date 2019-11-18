@@ -1,8 +1,10 @@
-const CACHE_NAME = 'footballeague-v1';
+const CACHE_NAME = 'footballeague-v2';
 var urlsToCache = [
 	'/',
 	'/dist/manifest.json',
-	// '/icon.png',
+	'/dist/img/icon.png',
+	'/dist/img/icon-512.png',
+	'/dist/img/icon-192.png',
 	'/dist/pages/home.html',
 	'/dist/pages/team-detail.html',
 	'/dist/main.js',
@@ -55,7 +57,7 @@ self.addEventListener('activate', function(event) {
 self.addEventListener('push', function(event) {
 	const options = {
 		body: event.data.text(),
-		// icon:
+		icon: './img/icon-192.png',
 		vibrate: [ 100, 50, 100 ],
 		data: {
 			dateOfArrival: Date.now(),
