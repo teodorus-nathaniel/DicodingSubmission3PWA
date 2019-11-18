@@ -13,7 +13,7 @@ window.addEventListener('load', async () => {
 
 	if ('serviceWorker' in navigator) {
 		try {
-			await navigator.serviceWorker.register('./service-worker.js');
+			await navigator.serviceWorker.register('./../service-worker.js');
 			console.log('Serviceworker successfully registered.');
 			await requestPermission();
 		} catch (e) {
@@ -21,7 +21,7 @@ window.addEventListener('load', async () => {
 		}
 	} else console.log('Browser have no support for Serviceworker yet.');
 
-	async function requestPermission() {
+	async function requestPermission (){
 		if (window.Notification) {
 			const result = await Notification.requestPermission();
 			if (result === 'denied') console.log('notification denied.');
@@ -33,17 +33,17 @@ window.addEventListener('load', async () => {
 		}
 	}
 
-	function registerPushNotification() {
+	function registerPushNotification (){
 		if ('PushManager' in window) {
 			const publicKey = 'BNO2RFLEiW03a0vW9jD9gKXvvLeAVCNnCXOJMHZNsZ20PCK78w5Ck9kiSwl1bdFF9NvR-X0pYp7F5OXSiF1cI-A';
 
-			navigator.serviceWorker.getRegistration().then(function(registration) {
+			navigator.serviceWorker.getRegistration().then(function (registration){
 				registration.pushManager
 					.subscribe({
 						userVisibleOnly: true,
 						applicationServerKey: urlBase64ToUint8Array(publicKey),
 					})
-					.then(function(subscribe) {
+					.then(function (subscribe){
 						console.log('Berhasil melakukan subscribe dengan endpoint: ', subscribe.endpoint);
 						console.log(
 							'Berhasil melakukan subscribe dengan p256dh key: ',
@@ -54,7 +54,7 @@ window.addEventListener('load', async () => {
 							btoa(String.fromCharCode.apply(null, new Uint8Array(subscribe.getKey('auth'))))
 						);
 					})
-					.catch(function(e) {
+					.catch(function (e){
 						console.error('Tidak dapat melakukan subscribe ', e.message);
 					});
 			});

@@ -1,7 +1,8 @@
 const CACHE_NAME = 'footballeague-v2';
 var urlsToCache = [
 	'/',
-	'/dist/manifest.json',
+	'/manifest.json',
+	'/favicon.ico',
 	'/dist/img/icon.png',
 	'/dist/img/icon-512.png',
 	'/dist/img/icon-192.png',
@@ -14,19 +15,19 @@ var urlsToCache = [
 	'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js',
 ];
 
-self.addEventListener('install', function(event) {
+self.addEventListener('install', function (event){
 	event.waitUntil(
-		caches.open(CACHE_NAME).then(function(cache) {
+		caches.open(CACHE_NAME).then(function (cache){
 			return cache.addAll(urlsToCache);
 		})
 	);
 });
 
-self.addEventListener('fetch', function(event) {
+self.addEventListener('fetch', function (event){
 	event.respondWith(
-		caches.match(event.request, { cacheName: CACHE_NAME }).then(function(response) {
+		caches.match(event.request, { cacheName: CACHE_NAME }).then(function (response){
 			const fetchRequest = event.request.clone();
-			const fetchPromise = fetch(fetchRequest).then(async function(response) {
+			const fetchPromise = fetch(fetchRequest).then(async function (response){
 				if (!response || response.status !== 200) {
 					return response;
 				}
@@ -40,11 +41,11 @@ self.addEventListener('fetch', function(event) {
 	);
 });
 
-self.addEventListener('activate', function(event) {
+self.addEventListener('activate', function (event){
 	event.waitUntil(
-		caches.keys().then(function(cacheNames) {
+		caches.keys().then(function (cacheNames){
 			return Promise.all(
-				cacheNames.map(function(cacheName) {
+				cacheNames.map(function (cacheName){
 					if (cacheName != CACHE_NAME) {
 						return caches.delete(cacheName);
 					}
@@ -54,7 +55,7 @@ self.addEventListener('activate', function(event) {
 	);
 });
 
-self.addEventListener('push', function(event) {
+self.addEventListener('push', function (event){
 	const options = {
 		body: event.data.text(),
 		icon: './img/icon-192.png',

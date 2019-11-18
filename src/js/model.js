@@ -10,7 +10,7 @@ const baseURL = 'https://api.football-data.org/v2/';
 const competitionID = 2014;
 
 export async function getPage (pagename){
-	const res = await fetch(`pages/${pagename}.html`);
+	const res = await fetch(`dist/pages/${pagename}.html`);
 	return await res.text();
 }
 
