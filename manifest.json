@@ -1,10 +1,10 @@
 {
-	"name": "FootbalLeague",
-	"short_name": "FootbalLeague",
+	"name": "Football League",
+	"short_name": "FootbaLeague",
 	"description": "Spain league football information provider",
 	"start_url": "/",
 	"display": "standalone",
-	"background_color": "#eeeeee",
+	"background_color": "#ffffff",
 	"theme_color": "#00897b",
 	"gcm_sender_id": "773525922327",
 	"icons": [
