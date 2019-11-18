@@ -3,9 +3,9 @@ import idb, { openDB } from 'idb';
 let db;
 const DATABASE_NAME = 'footballeague';
 
-export async function createDB() {
+export async function createDB (){
 	db = await openDB(DATABASE_NAME, 1, {
-		upgrade(db, oldVersion) {
+		upgrade (db, oldVersion) {
 			switch (oldVersion) {
 				case 0:
 					db.createObjectStore('teams', { keyPath: 'id' });
@@ -15,7 +15,7 @@ export async function createDB() {
 	});
 }
 
-export async function getFavoriteTeams() {
+export async function getFavoriteTeams (){
 	try {
 		const tx = db.transaction('teams', 'readonly');
 		const data = await tx.store.getAll();
@@ -26,19 +26,30 @@ export async function getFavoriteTeams() {
 	}
 }
 
-export async function insertFavTeam(team) {
+export async function getTeam (id){
+	try {
+		const tx = db.transaction('teams', 'readonly');
+		const data = await tx.store.get(+id);
+		return data;
+	} catch (error) {
+		console.log(`Error fetching fav team with id: ${id}\n${error}`);
+		return null;
+	}
+}
+
+export async function insertFavTeam (team){
 	const tx = db.transaction('teams', 'readwrite');
 	tx.store.put(team);
 	return tx.complete;
 }
 
-export function deleteFavTeam(team) {
+export function deleteFavTeam (team){
 	const tx = db.transaction('teams', 'readwrite');
 	tx.store.delete(team.id);
 	return tx.complete;
 }
 
-export async function getSavedMatches() {
+export async function getSavedMatches (){
 	try {
 		const tx = db.transaction('matches', 'readonly');
 		const data = await tx.store.getAll();
@@ -49,13 +60,24 @@ export async function getSavedMatches() {
 	}
 }
 
-export async function insertSavedMatch(match) {
+export async function getMatch (id){
+	try {
+		const tx = db.transaction('matches', 'readonly');
+		const data = await tx.store.get(+id);
+		return data;
+	} catch (error) {
+		console.log(`Error fetching saved matches with id: ${id}\n${error}`);
+		return null;
+	}
+}
+
+export async function insertSavedMatch (match){
 	const tx = db.transaction('matches', 'readwrite');
 	tx.store.put(match);
 	return tx.complete;
 }
 
-export function deleteSavedMatch(match) {
+export function deleteSavedMatch (match){
 	const tx = db.transaction('matches', 'readwrite');
 	tx.store.delete(match.id);
 	return tx.complete;

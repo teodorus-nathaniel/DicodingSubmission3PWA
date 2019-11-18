@@ -17,7 +17,7 @@ export const domStringID = {
 	positionTab: 'position-tab',
 	playerList: 'player-list',
 	pagination: 'pagination',
-	paginationList: 'pagination-list',
+	matches: 'matches',
 	likeButton: 'like-button',
 };
 
@@ -48,10 +48,17 @@ export function renderPage (page){
 	document.getElementById(domStringID.main).innerHTML = page;
 }
 
-export function renderTeams (teams){
+export function renderTeams (teams, noDataMessage = 'No Teams Found'){
 	const teamDom = document.getElementById(domStringID.teams);
 	if (!teamDom) return;
+
 	teamDom.innerHTML = '';
+
+	if (teams.length === 0) {
+		teamDom.textContent = noDataMessage;
+		return;
+	}
+
 	teams.forEach((team, idx) => {
 		teamDom.innerHTML += getTeamComponent(team, idx);
 	});
@@ -80,9 +87,15 @@ export function renderPlayers (squad, tab = null){
 	displayed.forEach((player) => (playerListDom.innerHTML += getPlayerComponent(player)));
 }
 
-export function renderMatches (matches, teamId){
-	const matchesListDom = document.getElementById(domStringID.paginationList);
+export function renderMatches (matches, teamId, noDataMessage = 'No Matches Found'){
+	const matchesListDom = document.getElementById(domStringID.matches);
 	matchesListDom.textContent = '';
+
+	if (matches.length === 0) {
+		matchesListDom.textContent = noDataMessage;
+		return;
+	}
+
 	matches.forEach((match) => {
 		matchesListDom.innerHTML += getMatchComponent(match, teamId);
 	});

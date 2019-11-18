@@ -2,13 +2,13 @@ import * as model from './model';
 import * as view from './view';
 import getPaginationItemComponent from './components/pagination-item';
 
-async function changePage(pagename) {
+async function changePage (pagename){
 	let id;
 	if (pagename == '') pagename = 'home';
 	else if (!isNaN(pagename)) {
 		id = pagename;
 		pagename = 'team-detail';
-	} else return;
+	}
 
 	const page = await model.getPage(pagename);
 	view.renderPage(page);
@@ -17,32 +17,55 @@ async function changePage(pagename) {
 		case 'home':
 			initHomePage();
 			break;
+		case 'subscribed':
+			initSubscribedPage();
+			break;
 		default:
 			initTeamDetailPage(id);
 	}
 }
 
-function initTeamDetailPage(id) {
+async function initSubscribedPage (){
+	const teams = await model.getFavoriteTeams();
+	const matches = await model.getSavedMatches();
+
+	teams.forEach((curr) => (curr.liked = true));
+	matches.forEach((curr) => (curr.saved = true));
+
+	view.renderTeams(teams, "You haven't favorited any team");
+	view.renderMatches(matches, -1, "You haven't subscribed to any match");
+
+	const favTeamsDom = document.getElementById(view.domStringID.teams);
+	const savedMatchesDom = document.getElementById(view.domStringID.matches);
+
+	favTeamsDom.addEventListener('click', teamClickListener);
+	favTeamsDom.addEventListener('click', teamLikeClickListener);
+	savedMatchesDom.addEventListener('click', matchesContainerListener);
+}
+
+function initTeamDetailPage (id){
 	initTeamDetailInfo(id);
 	initTeamMatch(id);
 }
 
-async function initTeamMatch(id) {
+async function initTeamMatch (id){
 	const matches = await model.getTeamMatches(id);
 
 	const itemPerPage = 5;
 	initPagination(matches, itemPerPage, id);
 
-	document.getElementById(view.domStringID.paginationList).addEventListener('click', (e) => {
-		const closestLink = e.target.closest(`.${view.domStringClass.notifyLink}`);
-		if (!closestLink) return;
-
-		id = closestLink.dataset.id;
-		toggleSavedMatch(id);
-	});
+	document.getElementById(view.domStringID.matches).addEventListener('click', matchesContainerListener);
 }
 
-async function toggleSavedMatch(id) {
+function matchesContainerListener (e){
+	const closestLink = e.target.closest(`.${view.domStringClass.notifyLink}`);
+	if (!closestLink) return;
+
+	const id = closestLink.dataset.id;
+	toggleSavedMatch(id);
+}
+
+async function toggleSavedMatch (id){
 	const res = await model.toggleSavedMatch(id);
 	if (res.status) {
 		view.renderNotifyButton(id, res.saved);
@@ -51,29 +74,33 @@ async function toggleSavedMatch(id) {
 	}
 }
 
-async function initHomePage() {
+async function initHomePage (){
 	const teamsDom = document.getElementById(view.domStringID.teams);
-	teamsDom.addEventListener('click', (e) => {
-		const target = e.target;
-		const closestTeam = target.closest('.team');
-		if (closestTeam && target.tagName !== 'I' && !target.closest('.card-reveal')) {
-			window.location.hash = closestTeam.dataset.id;
-		}
-	});
+	teamsDom.addEventListener('click', teamClickListener);
 
 	const teams = await model.getTeams();
 	view.renderTeams(teams);
 
-	teamsDom.addEventListener('click', (e) => {
-		const closestButton = e.target.closest('.like-button');
-		if (!closestButton) return;
-
-		const id = closestButton.dataset.id;
-		toggleFavoriteTeam(id, document.querySelector(`.${view.domStringClass.likeButton}[data-id="${id}"]`));
-	});
+	teamsDom.addEventListener('click', teamLikeClickListener);
 }
 
-async function toggleFavoriteTeam(id, component) {
+function teamClickListener (e){
+	const target = e.target;
+	const closestTeam = target.closest('.team');
+	if (closestTeam && target.tagName !== 'I' && !target.closest('.card-reveal')) {
+		window.location.hash = closestTeam.dataset.id;
+	}
+}
+
+function teamLikeClickListener (e){
+	const closestButton = e.target.closest('.like-button');
+	if (!closestButton) return;
+
+	const id = closestButton.dataset.id;
+	toggleFavoriteTeam(id, document.querySelector(`.${view.domStringClass.likeButton}[data-id="${id}"]`));
+}
+
+async function toggleFavoriteTeam (id, component){
 	const res = await model.toggleFavoriteTeam(id);
 	if (res.status) {
 		view.renderLikeButton(component, res.liked);
@@ -82,7 +109,7 @@ async function toggleFavoriteTeam(id, component) {
 	}
 }
 
-function initPagination(items, itemPerPage, id) {
+function initPagination (items, itemPerPage, id){
 	const pagesCount = Math.ceil(items.length / itemPerPage);
 	const paginationDom = document.getElementById(view.domStringID.pagination);
 	paginationDom.textContent = '';
@@ -110,14 +137,14 @@ function initPagination(items, itemPerPage, id) {
 	});
 }
 
-function paginate(items, page, itemPerPage) {
+function paginate (items, page, itemPerPage){
 	const startIndex = (page - 1) * itemPerPage;
 	const itemsDisplayed = items.slice(startIndex, startIndex + itemPerPage);
 
 	return itemsDisplayed;
 }
 
-async function initTeamDetailInfo(id) {
+async function initTeamDetailInfo (id){
 	const team = await model.getTeamInfo(id);
 	view.renderTeam(team);
 	view.renderPlayers(team.squad);
@@ -142,7 +169,7 @@ async function initTeamDetailInfo(id) {
 	});
 }
 
-export default function init() {
+export default function init (){
 	view.initNav();
 	changePage(window.location.hash.substring(1));
 	window.addEventListener('hashchange', () => changePage(window.location.hash.substring(1)));
