@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-export default function getMatchComponent({ homeTeam, awayTeam, utcDate, competition, id, saved }, teamId) {
+export default function getMatchComponent ({ homeTeam, awayTeam, utcDate, competition, id, saved }, teamId){
 	const date = moment(new Date(utcDate));
 	return `
     <li>
@@ -23,7 +23,7 @@ export default function getMatchComponent({ homeTeam, awayTeam, utcDate, competi
           </div>
         </div>
         <div class="card-action">
-          <a class="cursor notify-link" data-id="${id}">${saved
+          <a class="cursor notify-link ${saved ? 'saved' : ''}" data-id="${id}">${saved
 		? 'Notification scheduled'
 		: 'Notify me about this match'}</a>
           <a class="italic right hide-on-small-only">${date.fromNow()}</a>

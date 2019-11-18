@@ -9,16 +9,16 @@ let matches = [];
 const baseURL = 'https://api.football-data.org/v2/';
 const competitionID = 2014;
 
-export async function getPage(pagename) {
+export async function getPage (pagename){
 	const res = await fetch(`pages/${pagename}.html`);
 	return await res.text();
 }
 
-export async function getFavoriteTeams() {
+export async function getFavoriteTeams (){
 	return await db.getFavoriteTeams();
 }
 
-export async function getTeams() {
+export async function getTeams (){
 	if (teams.length !== 0) return teams;
 	const favTeams = await getFavoriteTeams();
 
@@ -33,7 +33,7 @@ export async function getTeams() {
 	return teams;
 }
 
-export async function getTeamInfo(teamId) {
+export async function getTeamInfo (teamId){
 	if (team.id === teamId && Object.entries(team.info).length !== 0) return team.info;
 	team = await fetchJSON(`${baseURL}teams/${teamId}`);
 
@@ -43,11 +43,11 @@ export async function getTeamInfo(teamId) {
 	return team;
 }
 
-export async function getSavedMatches() {
+export async function getSavedMatches (){
 	return await db.getSavedMatches();
 }
 
-export async function getTeamMatches(teamId) {
+export async function getTeamMatches (teamId){
 	const res = await fetchJSON(`${baseURL}teams/${teamId}/matches?status=SCHEDULED`);
 	const savedMatches = await getSavedMatches();
 
@@ -60,7 +60,7 @@ export async function getTeamMatches(teamId) {
 	return matches;
 }
 
-export async function toggleSavedMatch(id) {
+export async function toggleSavedMatch (id){
 	const match = matches.find((match) => match.id === +id);
 
 	try {
@@ -76,7 +76,7 @@ export async function toggleSavedMatch(id) {
 	return { status: true, saved: match.saved };
 }
 
-export async function toggleFavoriteTeam(id) {
+export async function toggleFavoriteTeam (id){
 	let teamData;
 	if (teams.length === 0) teamData = team;
 	else teamData = teams.find((curr) => curr.id === +id);

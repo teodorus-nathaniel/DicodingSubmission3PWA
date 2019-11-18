@@ -26,22 +26,29 @@ export const domStringClass = {
 	notifyLink: 'notify-link',
 };
 
-export function renderLikeButton(component, liked) {
+export function renderLikeButton (component, liked){
 	if (!component) return;
 	component.firstElementChild.textContent = `favorite${liked ? '' : '_border'}`;
 }
 
-export function renderNotifyButton(id, saved) {
-	document.querySelector(`.${domStringClass.notifyLink}[data-id="${id}"]`).textContent = `${saved
-		? 'Notification scheduled'
-		: 'Notify me about this match'}`;
+export function renderNotifyButton (id, saved){
+	const btn = document.querySelector(`.${domStringClass.notifyLink}[data-id="${id}"]`);
+	if (!btn) return;
+
+	if (saved) {
+		btn.textContent = 'Notification scheduled';
+		btn.classList.add('saved');
+	} else {
+		btn.textContent = 'Notify me about this match';
+		btn.classList.remove('saved');
+	}
 }
 
-export function renderPage(page) {
+export function renderPage (page){
 	document.getElementById(domStringID.main).innerHTML = page;
 }
 
-export function renderTeams(teams) {
+export function renderTeams (teams){
 	const teamDom = document.getElementById(domStringID.teams);
 	if (!teamDom) return;
 	teamDom.innerHTML = '';
@@ -50,7 +57,7 @@ export function renderTeams(teams) {
 	});
 }
 
-export function renderTeam(team) {
+export function renderTeam (team){
 	const crestDom = document.getElementById(domStringID.team.crest);
 	const nameDom = document.getElementById(domStringID.team.name);
 	const addressDom = document.getElementById(domStringID.team.address);
@@ -66,14 +73,14 @@ export function renderTeam(team) {
 	emailDom.textContent = team.email;
 }
 
-export function renderPlayers(squad, tab = null) {
+export function renderPlayers (squad, tab = null){
 	const displayed = squad.filter((player) => player.position === tab);
 	const playerListDom = document.getElementById(domStringID.playerList);
 	playerListDom.textContent = '';
 	displayed.forEach((player) => (playerListDom.innerHTML += getPlayerComponent(player)));
 }
 
-export function renderMatches(matches, teamId) {
+export function renderMatches (matches, teamId){
 	const matchesListDom = document.getElementById(domStringID.paginationList);
 	matchesListDom.textContent = '';
 	matches.forEach((match) => {
@@ -81,6 +88,6 @@ export function renderMatches(matches, teamId) {
 	});
 }
 
-export function initNav() {
+export function initNav (){
 	M.Sidenav.init(document.getElementById(domStringID.sideNav));
 }

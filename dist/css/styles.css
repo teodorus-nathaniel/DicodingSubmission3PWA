@@ -176,6 +176,9 @@ main {
 .match-title p {
 	margin: 5px !important;
 }
+.notify-link.saved {
+	font-weight: bold;
+}
 
 @media screen and (max-width: 1500px) {
 	.large-font {
