@@ -1,5 +1,5 @@
 import controller from './js/controller';
-import { createDB } from './js/utils/indexeddb';
+import { createDB, insertFavTeam } from './js/utils/indexeddb';
 
 window.addEventListener('load', async () => {
 	controller();
@@ -13,5 +13,9 @@ window.addEventListener('load', async () => {
 		}
 	} else console.log('Browser have no support for Serviceworker yet.');
 
-	createDB();
+	if (window.indexedDB) {
+		await createDB();
+	} else {
+		console.log('Indexed DB not supported by browser.');
+	}
 });

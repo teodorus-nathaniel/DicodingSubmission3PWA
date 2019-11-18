@@ -182,12 +182,10 @@ main {
 		font-size: medium;
 	}
 }
-<<<<<<< HEAD
-=======
+
 @media screen and (min-width: 600px) {
 	.vertical-center {
 		display: flex;
 		align-items: center;
 	}
 }
->>>>>>> d942eaeb7d89b3e5ee5ebd0b6c95ab2966a68772
