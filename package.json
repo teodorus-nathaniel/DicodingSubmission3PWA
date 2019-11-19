@@ -6,7 +6,7 @@
 	"scripts": {
 		"build": "webpack",
 		"develop": "webpack --watch --mode=development",
-		"start": "node server.js"
+		"start": "webpack && node server.js"
 	},
 	"author": "",
 	"license": "ISC",
