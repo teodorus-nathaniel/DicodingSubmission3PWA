@@ -1,8 +1,12 @@
 var path = require('path');
 
 module.exports = {
+	output: {
+		path: path.resolve(__dirname),
+		filename: 'main.js',
+	},
 	devServer: {
-		contentBase: path.join(__dirname, 'dist'),
+		contentBase: __dirname,
 		compress: true,
 	},
 };
