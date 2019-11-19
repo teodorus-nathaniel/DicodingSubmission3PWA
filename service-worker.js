@@ -1,4 +1,4 @@
-const CACHE_NAME = 'footballeague-v2';
+const CACHE_NAME = 'footballeague-v3';
 var urlsToCache = [
 	'/',
 	'/manifest.json',
