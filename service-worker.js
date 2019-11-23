@@ -1,59 +1,46 @@
-const CACHE_NAME = 'footballeague-v3';
-var urlsToCache = [
-	'/',
-	'/manifest.json',
-	'/favicon.ico',
-	'/img/icon.png',
-	'/img/icon-512.png',
-	'/img/icon-192.png',
-	'/pages/home.html',
-	'/pages/team-detail.html',
-	'/main.js',
-	'/css/styles.css',
-	'https://fonts.googleapis.com/icon?family=Material+Icons',
-	'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css',
-	'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js',
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js');
+
+workbox.precaching.precacheAndRoute([
+	{url: '/', revision: 1},
+	{url: '/manifest.json', revision: 1},
+	{url: '/favicon.ico', revision: 1},
+	{url: '/img/icon.png', revision: 1},
+	{url: '/img/icon-512.png', revision: 1},
+	{url: '/img/icon-192.png', revision: 1},
+	{url: '/pages/home.html', revision: 1},
+	{url: '/pages/team-detail.html', revision: 1},
+	{url: '/main.js', revision: 1},
+	{url: '/css/styles.css', revision: 1},
+	{url: 'https://fonts.googleapis.com/icon?family=Material+Icons', revision: 1},
+	{url: 'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css', revision: 1},
+	{url: 'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js', revision: 1},
+]);
+
+const plugins = [
+	new workbox.cacheableResponse.Plugin({
+		statuses: [0, 200],
+	}),
+	new workbox.expiration.Plugin({
+		maxAgeSeconds: 60 * 60 * 24 * 180,
+		maxEntries: 30,
+	}),
 ];
 
-self.addEventListener('install', function (event){
-	event.waitUntil(
-		caches.open(CACHE_NAME).then(function (cache){
-			return cache.addAll(urlsToCache);
-		})
-	);
-});
+workbox.routing.registerRoute(
+	/^https:\/\/api.football-data.org\/v2\//,
+	new workbox.strategies.CacheFirst({
+		cacheName: 'football-api',
+		plugins,
+	})
+);
 
-self.addEventListener('fetch', function (event){
-	event.respondWith(
-		caches.match(event.request, { cacheName: CACHE_NAME }).then(function (response){
-			const fetchRequest = event.request.clone();
-			const fetchPromise = fetch(fetchRequest).then(async function (response){
-				if (!response || response.status !== 200) {
-					return response;
-				}
-				var responseToCache = response.clone();
-				const cache = await caches.open(CACHE_NAME);
-				cache.put(event.request, responseToCache);
-				return response;
-			});
-			return response || fetchPromise;
-		})
-	);
-});
-
-self.addEventListener('activate', function (event){
-	event.waitUntil(
-		caches.keys().then(function (cacheNames){
-			return Promise.all(
-				cacheNames.map(function (cacheName){
-					if (cacheName != CACHE_NAME) {
-						return caches.delete(cacheName);
-					}
-				})
-			);
-		})
-	);
-});
+workbox.routing.registerRoute(
+	/^https:\/\/upload.wikimedia.org\/wikipedia\//,
+	new workbox.strategies.CacheFirst({
+		cacheName: 'football-crest',
+		plugins,
+	})
+)
 
 self.addEventListener('push', function (event){
 	const options = {
