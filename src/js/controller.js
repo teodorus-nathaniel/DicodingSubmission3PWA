@@ -25,7 +25,23 @@ async function changePage (pagename){
 	}
 }
 
-async function initSubscribedPage (){
+function initSubscribedPage (){
+	initSubscribedContent();
+
+	const favTeamsDom = document.getElementById(view.domStringID.teams);
+	const savedMatchesDom = document.getElementById(view.domStringID.matches);
+
+	function refreshAfterEvent (e, callback){
+		callback(e);
+		initSubscribedContent();
+	}
+
+	favTeamsDom.addEventListener('click', (e) => refreshAfterEvent(e, teamClickListener));
+	favTeamsDom.addEventListener('click', (e) => refreshAfterEvent(e, teamLikeClickListener));
+	savedMatchesDom.addEventListener('click', (e) => refreshAfterEvent(e, matchesContainerListener));
+}
+
+async function initSubscribedContent (){
 	const teams = await model.getFavoriteTeams();
 	const matches = await model.getSavedMatches();
 
@@ -34,13 +50,6 @@ async function initSubscribedPage (){
 
 	view.renderTeams(teams, "You haven't favorited any team");
 	view.renderMatches(matches, -1, "You haven't subscribed to any match");
-
-	const favTeamsDom = document.getElementById(view.domStringID.teams);
-	const savedMatchesDom = document.getElementById(view.domStringID.matches);
-
-	favTeamsDom.addEventListener('click', teamClickListener);
-	favTeamsDom.addEventListener('click', teamLikeClickListener);
-	savedMatchesDom.addEventListener('click', matchesContainerListener);
 }
 
 function initTeamDetailPage (id){
@@ -72,6 +81,12 @@ async function toggleSavedMatch (id){
 	} else {
 		alert('Error saving match :(');
 	}
+
+	if (res.saved) {
+		view.makeToast('Match has been subscribed!');
+	} else {
+		view.makeToast('Match has been removed from subscribed.');
+	}
 }
 
 async function initHomePage (){
@@ -92,12 +107,21 @@ function teamClickListener (e){
 	}
 }
 
-function teamLikeClickListener (e){
+async function teamLikeClickListener (e){
 	const closestButton = e.target.closest('.like-button');
 	if (!closestButton) return;
 
 	const id = closestButton.dataset.id;
-	toggleFavoriteTeam(id, document.querySelector(`.${view.domStringClass.likeButton}[data-id="${id}"]`));
+	const liked = await toggleFavoriteTeam(
+		id,
+		document.querySelector(`.${view.domStringClass.likeButton}[data-id="${id}"]`)
+	);
+
+	if (liked) {
+		view.makeToast('Team has been favorited!');
+	} else {
+		view.makeToast('Team has been removed from favorited.');
+	}
 }
 
 async function toggleFavoriteTeam (id, component){
@@ -107,6 +131,7 @@ async function toggleFavoriteTeam (id, component){
 	} else {
 		alert('Error saving team to favorite :(');
 	}
+	return res.liked;
 }
 
 function initPagination (items, itemPerPage, id){

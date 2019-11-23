@@ -106,7 +106,6 @@ export async function toggleFavoriteTeam (id){
 		else await db.insertFavTeam(teamData);
 
 		teamData.liked = !teamData.liked;
-		console.log(teamData);
 	} catch (error) {
 		console.log(`Error toggling fav\n${error}`);
 		return { status: false };

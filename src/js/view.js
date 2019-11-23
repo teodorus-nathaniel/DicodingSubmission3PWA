@@ -21,6 +21,10 @@ export const domStringID = {
 	likeButton: 'like-button',
 };
 
+export function makeToast (text){
+	M.toast({ html: text });
+}
+
 export const domStringClass = {
 	likeButton: 'like-button',
 	notifyLink: 'notify-link',

@@ -13,8 +13,8 @@ window.addEventListener('load', async () => {
 
 	if ('serviceWorker' in navigator) {
 		try {
-			await navigator.serviceWorker.register('./../service-worker.js');
-			console.log('Serviceworker successfully registered.');
+			const registration = await navigator.serviceWorker.register('./../service-worker.js');
+			console.log('Serviceworker successfully registered.', registration);
 			await requestPermission();
 		} catch (e) {
 			console.log(`Service worker registration failed\n${e}`);
